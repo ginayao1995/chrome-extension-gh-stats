@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "chrome-extension-gh-stats",
   "version": "2.7.0",
-  "description": "A chrome extension boilerplate built with React 16 and Webpack 4",
+  "description": "A chrome extension displaying GitHub stats",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/ginayao1995/chrome-extension-gh-stats.git"
   },
   "scripts": {
     "build": "node utils/build.js",
