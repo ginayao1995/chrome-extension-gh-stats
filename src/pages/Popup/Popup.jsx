@@ -80,6 +80,9 @@ const Popup = () => {
           <span>Authored: {authoredCount} issues</span>
           <span>Reviewed: {commentedCount} issues</span>
           <h2>{authoredCount && commentedCount && commentedCount/authoredCount}</h2>
+          <h6>
+            <a className="App-link small" href="https://github.com/ginayao1995/chrome-extension-gh-stats">ginayao1995/chrome-extension-gh-stats</a>
+          </h6>
         </React.Fragment>}
       </header>
     </div>
