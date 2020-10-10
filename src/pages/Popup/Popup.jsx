@@ -1,22 +1,32 @@
 import React from 'react';
 import logo from '../../assets/img/logo.svg';
-import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
 
+import secrets from 'secrets';
+
 const Popup = () => {
+  const [name, setName] = React.useState();
+  const [avatarUrl, setAvatarUrl] = React.useState();
+
+  React.useEffect(() => {
+    (async function () {
+      const response = await fetch('https://api.github.com/user', {
+        headers: {
+          Authorization: `token ${secrets['github_key']}`,
+        },
+      });
+
+      const { name, avatar_url: avatarUrl } = await response.json();
+      setName(name);
+      setAvatarUrl(avatarUrl);
+    })();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Greetings />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <img src={avatarUrl} className="App-logo" alt="logo" />
+        Hi, {name}!
       </header>
     </div>
   );

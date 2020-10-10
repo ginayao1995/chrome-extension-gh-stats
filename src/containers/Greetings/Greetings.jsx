@@ -3,7 +3,7 @@ import icon from '../../assets/img/icon-128.png';
 
 class GreetingComponent extends Component {
   state = {
-    name: 'Gina, u da best',
+    name: 'Gina, u da best!',
   };
 
   render() {
