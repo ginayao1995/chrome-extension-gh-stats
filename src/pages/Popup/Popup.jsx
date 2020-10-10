@@ -76,12 +76,20 @@ const Popup = () => {
       <header className="App-header">
         {name && authoredCount >= 0 && <React.Fragment>
           <img src={avatarUrl} className="avatar"/>
-          <span>Hi, <a className="App-link" href={profileUrl}>{name}</a>!</span>
+          <span>Hi, <a className="App-link" href="#"  onClick={() => {
+            chrome.tabs.update({
+              url: profileUrl
+            })}
+          }>{name}</a>!</span>
           <span>Authored: {authoredCount} issues</span>
           <span>Reviewed: {commentedCount} issues</span>
           <h2>{authoredCount && commentedCount && commentedCount/authoredCount}</h2>
           <h6>
-            <a className="App-link small" href="https://github.com/ginayao1995/chrome-extension-gh-stats">ginayao1995/chrome-extension-gh-stats</a>
+            <a className="App-link" href="#" onClick={() => {
+              chrome.tabs.update({
+                url: "https://github.com/ginayao1995/chrome-extension-gh-stats"
+              })
+            }}>ginayao1995/chrome-extension-gh-stats</a>
           </h6>
         </React.Fragment>}
       </header>
