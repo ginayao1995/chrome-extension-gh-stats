@@ -24,3 +24,10 @@
   color: #61dafb;
   display: inline;
 }
+
+input {
+  height: 2rem;
+  padding: 6px 9px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
