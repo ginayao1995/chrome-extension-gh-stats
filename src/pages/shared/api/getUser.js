@@ -1,15 +1,18 @@
 import secrets from 'secrets';
 
-const requestOptions = {
-  method: 'POST',
-  headers: {
-    Authorization: `token ${secrets['github_key']}`,
-  },
-};
+/**
+ * @typedef GithubUser
+ * @property {string} profileUrl
+ * @property {string} avatarUrl
+ * @property {string} userName
+ *
+ */
 
 /**
- * @param user Github user to look up (optional)
- * @returns {Promise<{profileUrl, avatarUrl, userName}>}
+ * Get user data from Github
+ *
+ * @param {string} user Github user to look up (optional) - defaults to authenticated user.
+ * @returns {Promise<GithubUser>}
  */
 export async function getUser(user) {
   const query =
@@ -19,7 +22,10 @@ export async function getUser(user) {
     `https://api.github.com/graphql`,
     //
     {
-      ...requestOptions,
+      method: 'POST',
+      headers: {
+        Authorization: `token ${secrets['github_key']}`,
+      },
       body: JSON.stringify({ query, variables: { username: user } }),
     },
   );

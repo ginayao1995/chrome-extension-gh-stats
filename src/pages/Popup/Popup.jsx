@@ -1,23 +1,7 @@
 import React from 'react';
 import './Popup.css';
 import { getUser } from '../shared/api/getUser';
-
-import secrets from 'secrets';
-
-const makeSearchQuery = (options) => {
-  return (
-    '?q=' +
-    Object.keys(options)
-      .map((key, idx) => `${key}:${options[key]}`)
-      .join('+')
-  );
-};
-
-const requestOptions = {
-  headers: {
-    Authorization: `token ${secrets['github_key']}`,
-  },
-};
+import { getUserIssues } from '../shared/api/getUserIssues';
 
 const formattedFirstDateOfMonth = () => {
   const date = new Date();
@@ -47,40 +31,10 @@ const Popup = () => {
   React.useEffect(() => {
     if (name) {
       (async function () {
-        const response = await fetch(
-          'https://api.github.com/search/issues' +
-            makeSearchQuery({
-              type: 'pr',
-              org: 'change',
-              author: name,
-              created: `${date}..*`,
-            }),
-          requestOptions
-        );
-
-        const { total_count: issueCount } = await response.json();
-        setAuthoredCount(issueCount);
-      })();
-    }
-  }, [name, date]);
-
-  React.useEffect(() => {
-    if (name) {
-      (async function () {
-        const response = await fetch(
-          'https://api.github.com/search/issues' +
-            makeSearchQuery({
-              type: 'pr',
-              org: 'change',
-              'reviewed-by': name,
-              '-author': name,
-              created: `${date}..*`,
-            }),
-          requestOptions
-        );
-
-        const { total_count: issueCount } = await response.json();
-        setCommentedCount(issueCount);
+        const { authored, reviewed } = await getUserIssues(name, { startDate: date, countOnly: true, })
+        setAuthoredCount(authored.totalCount)
+        setCommentedCount(reviewed.totalCount)
+        console.log(authored, reviewed)
       })();
     }
   }, [name, date]);
