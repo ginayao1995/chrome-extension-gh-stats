@@ -5,9 +5,7 @@ import { getUserIssues } from '../shared/api/getUserIssues';
 
 const formattedFirstDateOfMonth = () => {
   const date = new Date();
-  return new Date(date.getFullYear(), date.getMonth(), 1)
-    .toISOString()
-    .split('T')[0];
+  return new Date(date.getFullYear(), date.getMonth(), 1).toISOString().split('T')[0];
 };
 
 const Popup = () => {
@@ -21,7 +19,7 @@ const Popup = () => {
 
   React.useEffect(() => {
     (async function () {
-      const { userName, profileUrl, avatarUrl } = await getUser(searchName)
+      const { userName, profileUrl, avatarUrl } = await getUser(searchName);
       setName(userName);
       setAvatarUrl(avatarUrl);
       setProfileUrl(profileUrl);
@@ -31,10 +29,13 @@ const Popup = () => {
   React.useEffect(() => {
     if (name) {
       (async function () {
-        const { authored, reviewed } = await getUserIssues(name, { startDate: date, countOnly: true, })
-        setAuthoredCount(authored.totalCount)
-        setCommentedCount(reviewed.totalCount)
-        console.log(authored, reviewed)
+        const { authored, reviewed } = await getUserIssues(name, {
+          startDate: date,
+          countOnly: true,
+        });
+        setAuthoredCount(authored.totalCount);
+        setCommentedCount(reviewed.totalCount);
+        console.log(authored, reviewed);
       })();
     }
   }, [name, date]);
@@ -51,8 +52,7 @@ const Popup = () => {
                   name="name"
                   placeholder={name}
                   onBlur={(event) => {
-                    if (name !== event.target.value)
-                      setSearchName(event.target.value);
+                    if (name !== event.target.value) setSearchName(event.target.value);
                   }}
                 />
               </label>
@@ -62,8 +62,7 @@ const Popup = () => {
                   name="from"
                   defaultValue={date}
                   onBlur={(event) => {
-                    if (date !== event.target.value)
-                      setDate(event.target.value);
+                    if (date !== event.target.value) setDate(event.target.value);
                   }}
                 />
               </label>
@@ -95,8 +94,7 @@ const Popup = () => {
                 className="App-link"
                 onClick={() => {
                   chrome.tabs.update({
-                    url:
-                      'newtab.html',
+                    url: 'newtab.html',
                   });
                 }}
               >

@@ -15,8 +15,9 @@ import secrets from 'secrets';
  * @returns {Promise<GithubUser>}
  */
 export async function getUser(user) {
-  const query =
-    `query${ user ? '($username: String!)' : ''} { ${ user ? 'user(login: $username)' : 'viewer'} { login, avatarUrl, url } }`;
+  const query = `query${user ? '($username: String!)' : ''} { ${
+    user ? 'user(login: $username)' : 'viewer'
+  } { login, avatarUrl, url } }`;
 
   const response = await fetch(
     `https://api.github.com/graphql`,
@@ -27,9 +28,13 @@ export async function getUser(user) {
         Authorization: `token ${secrets['github_key']}`,
       },
       body: JSON.stringify({ query, variables: { username: user } }),
-    },
+    }
   );
 
-  const { data: { [ user ? 'user' : 'viewer']: { login: userName, avatarUrl, url: profileUrl } } } = await response.json();
+  const {
+    data: {
+      [user ? 'user' : 'viewer']: { login: userName, avatarUrl, url: profileUrl },
+    },
+  } = await response.json();
   return { userName, avatarUrl, profileUrl };
 }

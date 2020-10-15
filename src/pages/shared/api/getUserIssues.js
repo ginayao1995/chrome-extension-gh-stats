@@ -1,25 +1,21 @@
 import secrets from 'secrets';
 
 const makeSearchQuery = (options) => {
-  return (
-    Object.keys(options)
-      .map((key, idx) => `${key}:${options[key]}`)
-      .join(' ')
-  );
+  return Object.keys(options)
+    .map((key, idx) => `${key}:${options[key]}`)
+    .join(' ');
 };
 
 const formatIssues = (result) => ({
   totalCount: result.issueCount,
   items: result.nodes,
   cursor: result.pageInfo?.endCursor,
-  hasMore: result.pageInfo?.hasNextPage
+  hasMore: result.pageInfo?.hasNextPage,
 });
 
 const firstDateOfYear = () => {
   const date = new Date();
-  return new Date(date.getFullYear(), 0, 1)
-    .toISOString()
-    .split('T')[0];
+  return new Date(date.getFullYear(), 0, 1).toISOString().split('T')[0];
 };
 
 /**
@@ -52,14 +48,17 @@ const firstDateOfYear = () => {
  * @param [countOnly] {boolean} - only fetch counts
  * @returns {Promise<UserIssues>}
  */
-export async function getUserIssues(user, {
-  startDate = firstDateOfYear(),
-  fetchAuthored = true,
-  fetchReviewed = true,
-  authoredCursor,
-  reviewedCursor,
-  countOnly = false
-}) {
+export async function getUserIssues(
+  user,
+  {
+    startDate = firstDateOfYear(),
+    fetchAuthored = true,
+    fetchReviewed = true,
+    authoredCursor,
+    reviewedCursor,
+    countOnly = false,
+  }
+) {
   const query = `
           query(
             $authoredSearch: String!, 
@@ -126,14 +125,18 @@ export async function getUserIssues(user, {
           reviewedCursor,
           fetchAuthored,
           fetchReviewed,
-          fetchItems: !countOnly
+          fetchItems: !countOnly,
         },
-      }), },
+      }),
+    }
   );
 
-  const { data: { authored, reviewed } } = await response.json();
+  const {
+    data: { authored, reviewed },
+  } = await response.json();
 
   return {
-    ...(fetchAuthored && { authored: formatIssues(authored)}),
-    ...(fetchReviewed && { reviewed: formatIssues(reviewed)}) };
+    ...(fetchAuthored && { authored: formatIssues(authored) }),
+    ...(fetchReviewed && { reviewed: formatIssues(reviewed) }),
+  };
 }
