@@ -1,5 +1,5 @@
 import React from 'react';
-import './Popup.css';
+import './Popup.scss';
 import { getUser } from '../shared/api/getUser';
 import { getUserIssues } from '../shared/api/getUserIssues';
 
@@ -69,12 +69,11 @@ const Popup = () => {
               </label>
             </span>
 
-            <hr style={{ width: '100%' }}></hr>
+            <hr style={{ width: '100%' }} />
 
             <img src={avatarUrl} className="avatar" />
             <a
               className="App-link"
-              href="#"
               onClick={() => {
                 chrome.tabs.update({
                   url: profileUrl,
@@ -91,20 +90,19 @@ const Popup = () => {
                 Math.round((commentedCount / authoredCount) * 100) / 100}
             </h2>
             <small>Reviewed/Authored</small>
-            <h6>
+            <h5>
               <a
                 className="App-link"
-                href="#"
                 onClick={() => {
                   chrome.tabs.update({
                     url:
-                      'https://github.com/ginayao1995/chrome-extension-gh-stats',
+                      'newtab.html',
                   });
                 }}
               >
-                ginayao1995/chrome-extension-gh-stats
+                more stats
               </a>
-            </h6>
+            </h5>
           </React.Fragment>
         )}
       </header>

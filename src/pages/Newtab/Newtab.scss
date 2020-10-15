@@ -1,4 +1,4 @@
-$myColor: red;
+$myColor: #61dafb;
 
 h1,
 h2,
@@ -7,4 +7,55 @@ h4,
 h5,
 h6 {
   color: $myColor;
+}
+
+.App {
+  min-height: 100vh;
+  text-align: center;
+  background-color: #282c34;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+  cursor: pointer;
+
+  &:hover { color: white }
+}
+
+
+.avatar {
+  height: 3em;
+  border-radius: 50%;
+  margin: 15px;
+}
+
+
+.header {
+  padding-right: 4em;
+  padding-left: 4em;
+  display: flex;
+  align-items: center;
+}
+
+.header-spacer {
+  flex-grow: 1;
+}
+
+nav {
+  .logo {
+    height: 3em;
+    border-radius: 50%;
+    margin: 15px;
+  }
+
+  .nav-item {
+    display: inline-block;
+    margin-right: 1em;
+    margin-left: 1em;
+
+    &.active {
+      text-decoration: underline;
+    }
+  }
 }
