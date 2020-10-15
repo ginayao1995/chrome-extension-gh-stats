@@ -1,5 +1,6 @@
 import React from 'react';
 import './Popup.css';
+import { getUser } from '../shared/api/getUser';
 
 import secrets from 'secrets';
 
@@ -27,6 +28,7 @@ const formattedFirstDateOfMonth = () => {
 
 const Popup = () => {
   const [name, setName] = React.useState();
+  const [searchName, setSearchName] = React.useState();
   const [date, setDate] = React.useState(formattedFirstDateOfMonth());
   const [avatarUrl, setAvatarUrl] = React.useState();
   const [profileUrl, setProfileUrl] = React.useState();
@@ -34,23 +36,13 @@ const Popup = () => {
   const [commentedCount, setCommentedCount] = React.useState();
 
   React.useEffect(() => {
-    const userUrl = name ? `users/${name}` : 'user';
     (async function () {
-      const response = await fetch(
-        `https://api.github.com/${userUrl}`,
-        requestOptions
-      );
-
-      const {
-        login: name,
-        avatar_url: avatarUrl,
-        html_url: profileUrl,
-      } = await response.json();
-      setName(name);
+      const { userName, profileUrl, avatarUrl } = await getUser(searchName)
+      setName(userName);
       setAvatarUrl(avatarUrl);
       setProfileUrl(profileUrl);
     })();
-  }, [name]);
+  }, [searchName]);
 
   React.useEffect(() => {
     if (name) {
@@ -106,9 +98,9 @@ const Popup = () => {
                   placeholder={name}
                   onBlur={(event) => {
                     if (name !== event.target.value)
-                      setName(event.target.value);
+                      setSearchName(event.target.value);
                   }}
-                ></input>
+                />
               </label>
               <label>
                 <input
@@ -119,7 +111,7 @@ const Popup = () => {
                     if (date !== event.target.value)
                       setDate(event.target.value);
                   }}
-                ></input>
+                />
               </label>
             </span>
 
